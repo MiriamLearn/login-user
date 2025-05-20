@@ -7,7 +7,8 @@ import { Box } from '@mui/material';
 import { Register } from './components/registration';
 import { RouterProvider } from 'react-router-dom';
 import { router } from './components/router';
-
+import { Provider } from 'react-redux';
+import { store } from './store/recipeStore';
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
  
@@ -17,6 +18,7 @@ function App() {
 
   return (
     <>
+    <Provider store={store}>
       <UserProvider>
         {isLoggedIn?(
           <>
@@ -33,10 +35,11 @@ function App() {
           </>
         )}
     
-      
-       {/* <Typography variant="h1" align="center" sx={{ mt: 20}}>Home</Typography> */}
        <RouterProvider router={router} />
     </UserProvider>
+ 
+    </Provider>
+
     </>
   )
 }

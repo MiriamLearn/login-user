@@ -8,6 +8,7 @@ import {
 } from '@mui/material';
 import UserContext from '../context/UserContext';
 import axios from 'axios';
+import ErrorSnackbar from './Error';
 
 export const Login= ({ onLoginSuccess }: { onLoginSuccess: () => void }) => {
   const context = useContext(UserContext);
@@ -15,10 +16,11 @@ export const Login= ({ onLoginSuccess }: { onLoginSuccess: () => void }) => {
     throw new Error('Your Component must be used within a UserProvider');
   }
   const {dispatch}=context;
-  // const { user, dispatch } = useContext(UserContext);
   const [open, setOpen] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('')
+  const [error, setError] = useState<any>(null);
+  const [openSnackbar, setOpenSnackbar] = useState(false);
 
   const handleLogin = async() => {
     try{
@@ -38,8 +40,9 @@ export const Login= ({ onLoginSuccess }: { onLoginSuccess: () => void }) => {
       } else {
         alert("You can't login");
       }
-    }catch (error: Error|any) {
-      alert('Error during login: ' + error.message);
+    }catch (error: any) {
+      setError(error);
+      setOpenSnackbar(true);
     }
   }
 
@@ -70,27 +73,9 @@ export const Login= ({ onLoginSuccess }: { onLoginSuccess: () => void }) => {
           </Button>
         </Box>
       </Modal>
+      <ErrorSnackbar error={error} open={openSnackbar} onClose={() => setOpenSnackbar(false)} />
     </>
   );
 };
 
 export default Login;
-
-
-
-
-
-//////////what i did first://////////
-// export const Login: React.FC = () => {
-//   const { user, dispatch } = useContext(UserContext);
-//   const [open, setOpen] = useState(false);
-//   const [email, setEmail] = useState('');
-
-//   const handleLogin = () => {
-//     if (email !== user.email) {
-//       dispatch({ type: 'RESET_USER' });
-//     }
-//     setOpen(false);
-//   };
-
-//   return (

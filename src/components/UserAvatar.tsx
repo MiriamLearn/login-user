@@ -7,7 +7,6 @@ import {
 } from '@mui/material';
 import UserContext from '../context/UserContext';
 import UpdateUser from './UpdateUser';
-// import { deepOrange } from '@mui/material/colors';
 
 const UserAvatar: React.FC = () => {
   const { user } = useContext(UserContext);
